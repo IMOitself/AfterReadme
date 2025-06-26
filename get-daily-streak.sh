@@ -12,3 +12,27 @@ get_json_from_graphql() {
   echo "$json"
 }
 
+
+
+
+
+get_daily_contribs_graphql='
+query($username: String!) {
+  user(login: $username) {
+    contributionsCollection {
+      contributionCalendar{
+        weeks {
+          contributionDays{
+            contributionCount
+            date
+          }
+        }
+      }
+    }
+  }
+}'
+
+json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'"}')
+daily_contribs=$(echo "$json" | jq -r '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]]')
+
+echo "$daily_contribs" | jq
