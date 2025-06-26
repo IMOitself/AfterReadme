@@ -6,9 +6,9 @@ GITHUB_TOKEN=$(sed -n '2p' sensitive-info.txt)
 graphql='
 query($username: String!) {
   user(login: $username) {
-    name
-    login
-    bio
+    contributionsCollection {
+      contributionYears
+    }
   }
 }'
 
