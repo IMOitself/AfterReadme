@@ -1,6 +1,6 @@
 # AfterReadme
 
-**automatically update README using emojisI**
+**automatically update README using emojis**
 
 > [!NOTE]
 > work in progress
@@ -20,3 +20,4 @@ coming soon..
 
 - [ ] daily streak checker
 - [ ] total contributions
+- [ ] repo cards
