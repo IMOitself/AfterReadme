@@ -9,9 +9,9 @@
 
 **Sample**
 
-❤️ total contributions: 876
+❤️ total contributions: null
 
-🔥 daily streak: 17
+🔥 daily streak: 0
 
 <br>
 
