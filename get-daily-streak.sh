@@ -7,7 +7,7 @@ get_json_from_graphql() {
   local graphql=$1
   local graphql_variables=$2
   local formatted_graphql=$(echo "$graphql" | tr -d '\n' | sed 's/  */ /g')
-  local query='{"query": "'$formatted_graphql'", "variables": '$graphql_variables'}'
+  local query='{"query": "'$formatted_graphql'", "variables": '$graphql_variables'}'  
   local json=$(curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d "$query" https://api.github.com/graphql)
   echo "$json"
 }
@@ -54,15 +54,35 @@ json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITH
 daily_contribs=$(echo "$json" | jq -r '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]]')
 reversed_daily_contribs=$(echo "$daily_contribs" | jq 'reverse')
 
-echo "$reversed_daily_contribs" > daily_contribs.json
 
-streak=$(jq 'reduce .[] as $item ({streak: 0, done: false};
-  if .done or ($item.contributionCount == 0) then
-    .done = true
+
+contrib_counts=($(echo "$reversed_daily_contribs" | grep '"contributionCount"' | sed -E 's/[^0-9]*([0-9]+).*/\1/'))
+
+streak=0
+
+# positive streak
+for contrib_count in "${contrib_counts[@]}"; do
+  if [ "$contrib_count" -gt 0 ]; then
+    streak=$((streak + 1))
   else
-    .streak += 1
-  end
-) | .streak' daily_contribs.json)
+    break
+  fi
+done
+
+# days since streak reset (negative value)
+if [ "$streak" -eq 0 ]; then
+  for contrib_count in "${contrib_counts[@]}"; do
+    if [ "$contrib_count" -eq 0 ]; then
+      streak=$((streak - 1))
+    else
+      break
+    fi
+  done
+fi
+
+# no contribution today but streak is not reset
+if [ "$streak" -eq -1 ]; then
+  streak=0
+fi
 
 echo $streak
-rm daily_contribs.json
