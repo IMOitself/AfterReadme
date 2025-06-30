@@ -28,14 +28,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Clone AfterReadme
+        run: |
+          git clone https://github.com/username/AfterReadme.git
+          ls AfterReadme
+
       - name: Update README
         env:
           USERNAME: ${{ inputs.username }}
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          chmod +x readme-updater.sh
+          chmod +x AfterReadme/readme-updater.sh
           
-          bash readme-updater.sh
+          bash AfterReadme/readme-updater.sh
+
+      - name: Remove cloned AfterReadme
+        run: rm -rf AfterReadme
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
