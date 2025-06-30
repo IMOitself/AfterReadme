@@ -7,7 +7,11 @@
 
 ## Usage
 
-coming soon..
+**Sample**
+
+❤️ total contributions: 871
+
+🔥 daily streak: 17
 
 <br>
 
