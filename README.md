@@ -7,7 +7,9 @@
 
 ## Usage
 
-coming soon..
+**Sample**
+❤️ total contributions: 0
+🔥 daily streak: 0
 
 <br>
 
