@@ -8,8 +8,8 @@
 ## Usage
 
 **Sample**
-❤️ total contributions: 0
-🔥 daily streak: 0
+❤️ total contributions: 870
+🔥 daily streak: 17
 
 <br>
 
