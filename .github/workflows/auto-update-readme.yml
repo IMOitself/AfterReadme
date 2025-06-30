@@ -10,7 +10,7 @@ on:
 
 jobs:
   call-reusable-workflow:
-    uses: IMOitself/AfterReadme/.github/workflows/after-readme.yml@main
+    uses: IMOitself/AfterReadme/.github/workflows/after-readme.yml@master
     with:
       username: 'IMOitself'
     secrets:
