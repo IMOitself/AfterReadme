@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "$(pwd)"
-total_contribs=$(bash "get-total-contribs.sh")
+total_contribs=$(bash "AfterReadme/get-total-contribs.sh")
 echo "$total_contribs"
 
-daily_streak=$(bash "get-daily-streak.sh")
+daily_streak=$(bash "AfterReadme/get-daily-streak.sh")
 echo "$daily_streak"
 
 readme=$(cat README.md)
