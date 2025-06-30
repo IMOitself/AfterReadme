@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 jobs:
-  call-reusable-workflow:
+  call-after-readme-workflow:
     uses: IMOitself/AfterReadme/.github/workflows/after-readme.yml@master
     with:
       username: 'IMOitself'

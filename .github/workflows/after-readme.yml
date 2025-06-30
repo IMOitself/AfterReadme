@@ -4,22 +4,22 @@ on:
   workflow_call:
     inputs:
       username:
-        description: 'The GitHub username to calculate the contribution streak for.'
+        description: 'GitHub username'
         required: true
         type: string
       commit_message:
-        description: 'The commit message to use when updating the README.'
+        description: 'Commit message e.g chore(bot): Update README'
         required: false
         type: string
         default: 'chore(bot): Update README'
 
     secrets:
       GH_PAT:
-        description: 'A Personal Access Token (PAT) with repo scope to commit changes.'
+        description: 'Personal Access Token (PAT)'
         required: true
 
 jobs:
-  update-readme-stats:
+  update-readme:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -28,7 +28,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update README with Streak Stats
+      - name: Update README
         env:
           USERNAME: ${{ inputs.username }}
           GH_PAT: ${{ secrets.GH_PAT }}
