@@ -33,9 +33,9 @@ jobs:
           USERNAME: ${{ inputs.username }}
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          chmod +x .github/workflows/AfterReadme/get-daily-streak.sh
+          chmod +x readme-updater.sh
           
-          bash .github/workflows/AfterReadme/get-daily-streak.sh
+          bash readme-updater.sh
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
