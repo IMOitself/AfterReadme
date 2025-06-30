@@ -42,7 +42,6 @@ query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
         weeks {
           contributionDays{
             contributionCount
-            date
           }
         }
       }
