@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "$USERNAME" > sensitive-info.txt
           echo "$GH_PAT" >> sensitive-info.txt
-          bash readme-updater.sh
+          bash .github/workflows/AfterReadme/readme-updater.sh
             
       - name: Check for staged changes
         id: check_changes
