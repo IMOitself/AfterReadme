@@ -6,16 +6,9 @@ echo "$total_contribs"
 daily_streak=$(bash "get-daily-streak.sh")
 echo "$daily_streak"
 
-test="
-## GitHub Stats
+readme=$(cat README.md)
 
-❤️ contribs: 0
-🔥 streak: 0
-"
+readme=$(echo "$readme" | sed -E 's/.*❤️([^:]+): .*/❤️\1: '$total_contribs'/g')
+readme=$(echo "$readme" | sed -E 's/.*🔥([^:]+): .*/🔥\1: '$daily_streak'/g')
 
-echo "$test"
-
-test=$(echo "$test" | sed -E 's/.*❤️([^:]+): .*/❤️\1: '$total_contribs'/g')
-test=$(echo "$test" | sed -E 's/.*🔥([^:]+): .*/🔥\1: '$daily_streak'/g')
-
-echo "$test"
+echo "$readme" > README.md
