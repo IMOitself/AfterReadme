@@ -13,11 +13,52 @@ get_json_from_graphql() {
 test_graphql='
   query($username: String!) {
     user(login: $username) {
-      name
-      login
+      createdAt
     }
   }'
 
 json=$(get_json_from_graphql "$test_graphql" '{"username": "'$GITHUB_USERNAME'"}')
+
+echo "$json"
+
+
+
+
+
+
+get_contribution_dates() {
+  get_creation_date_graphql='
+  query($username: String!) {
+    user(login: $username) {
+      createdAt
+    }
+  }'
+
+  json=$(get_json_from_graphql "$get_creation_date_graphql" '{"username": "'$GITHUB_USERNAME'"}')
+  creation_date=$(echo "$json" | jq -r '.data.user.createdAt')
+  current_date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+  echo "$creation_date" 
+  echo "$current_date"
+}
+
+
+dates=$(get_contribution_dates)
+
+from_date=$(echo $dates | cut -d ' ' -f 1)
+curr_date=$(echo $dates | cut -d ' ' -f 2)
+
+get_contribs_graphql='
+query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
+  user(login: $username) {
+    contributionsCollection(from: $from_date, to: $to_date) {
+      contributionCalendar {
+        totalContributions
+      }
+    }
+  }
+}'
+
+json=$(get_json_from_graphql "$get_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$curr_date'"}')
 
 echo "$json"
