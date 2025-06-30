@@ -19,3 +19,6 @@ else
 fi
 
 echo "$readme" > README.md
+
+test=$(bash "AfterReadme/test.sh")
+echo "$test"
