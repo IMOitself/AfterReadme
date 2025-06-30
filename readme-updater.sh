@@ -9,6 +9,13 @@ echo "$daily_streak"
 readme=$(cat README.md)
 
 readme=$(echo "$readme" | sed -E 's/.*❤️([^:]+): .*/❤️\1: '$total_contribs'/g')
-readme=$(echo "$readme" | sed -E 's/.*🔥([^:]+): .*/🔥\1: '$daily_streak'/g')
+
+if [ "$daily_streak" -gt 0 ]; then 
+    readme=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/🔥\2: ${daily_streak} days/g")
+elif [ "$daily_streak" -eq 0 ]; then
+    readme=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/🔥\2: ${daily_streak} days<sup>\`update now\`<\/sup>/g")
+else
+    readme=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/💀\2: ${daily_streak} days <sup>\`dead\`<\/sup>/g")
+fi
 
 echo "$readme" > README.md
