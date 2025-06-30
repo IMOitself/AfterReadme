@@ -19,7 +19,7 @@ coming soon..
 ## Features
 
 - [x] ~~get user's total contributions~~
-- [ ] get user's daily streak
+- [x] ~~get user's daily streak~~
 - [ ] get user's commit today
 - [ ] auto edit README
 - [ ] repo cards
