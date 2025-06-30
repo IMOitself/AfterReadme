@@ -34,6 +34,8 @@ dates=$(get_contribution_dates)
 from_date=$(echo $dates | cut -d ' ' -f 1)
 curr_date=$(echo $dates | cut -d ' ' -f 2)
 
+echo test1
+
 get_contribs_graphql='
 query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
   user(login: $username) {
@@ -47,5 +49,7 @@ query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
 
 json=$(get_json_from_graphql "$get_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$curr_date'"}')
 total_contribs=$(echo "$json" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
+
+echo test2
 
 echo $total_contribs
