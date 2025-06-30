@@ -8,7 +8,9 @@
 ## Usage
 
 **Sample**
+
 ❤️ total contributions: 870
+
 🔥 daily streak: 17
 
 <br>
