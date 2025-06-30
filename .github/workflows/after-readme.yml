@@ -30,7 +30,7 @@ jobs:
 
       - name: Clone AfterReadme
         run: |
-          git clone https://github.com/username/AfterReadme.git
+          git clone https://github.com/IMOitself/AfterReadme.git
           ls AfterReadme
 
       - name: Update README
