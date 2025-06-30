@@ -32,7 +32,7 @@ get_contribution_dates() {
 dates=$(get_contribution_dates)
 
 from_date=$(echo $dates | cut -d ' ' -f 1)
-to_date=$(echo $dates | cut -d ' ' -f 2)
+curr_date=$(echo $dates | cut -d ' ' -f 2)
 
 get_daily_contribs_graphql='
 query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
@@ -50,9 +50,19 @@ query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
   }
 }'
 
-json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$to_date'"}')
+json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$curr_date'"}')
 daily_contribs=$(echo "$json" | jq -r '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]]')
+reversed_daily_contribs=$(echo "$daily_contribs" | jq 'reverse')
 
-echo "$daily_contribs" > daily_contribs.json
+echo "$reversed_daily_contribs" > daily_contribs.json
 
-nano daily_contribs.json
+streak=$(jq 'reduce .[] as $item ({streak: 0, done: false};
+  if .done or ($item.contributionCount == 0) then
+    .done = true
+  else
+    .streak += 1
+  end
+) | .streak' daily_contribs.json)
+
+echo $streak
+rm daily_contribs.json
