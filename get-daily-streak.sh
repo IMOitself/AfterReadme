@@ -12,7 +12,7 @@ get_json_from_graphql() {
   echo "$json"
 }
 
-get_contribution_years() {
+get_contribution_dates() {
   get_creation_date_graphql='
   query($username: String!) {
     user(login: $username) {
@@ -22,25 +22,19 @@ get_contribution_years() {
 
   json=$(get_json_from_graphql "$get_creation_date_graphql" '{"username": "'$GITHUB_USERNAME'"}')
   creation_date=$(echo "$json" | jq -r '.data.user.createdAt')
-  creation_year=$(echo "$creation_date" | cut -d '-' -f 1)
-  current_year=$(date +'%Y')
+  current_date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-  years=$(seq $creation_year $current_year)
-  echo $years
+  echo "$creation_date" 
+  echo "$current_date"
 }
 
 
+dates=$(get_contribution_dates)
 
+from_date=$(echo $dates | cut -d ' ' -f 1)
+to_date=$(echo $dates | cut -d ' ' -f 2)
 
-
-years=$(get_contribution_years)
-total_daily_contribs=""
-
-for year in $years; do
-  from_date="${year}-01-01T00:00:00Z"
-  to_date="${year}-12-31T23:59:59Z"
-
-  get_daily_contribs_graphql='
+get_daily_contribs_graphql='
 query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
   user(login: $username) {
     contributionsCollection(from: $from_date, to: $to_date) {
@@ -56,13 +50,9 @@ query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
   }
 }'
 
-  json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$to_date'"}')
-  daily_contribs=$(echo "$json" | jq -r '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]]')
-  total_daily_contribs+="$daily_contribs"
-done
+json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$to_date'"}')
+daily_contribs=$(echo "$json" | jq -r '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]]')
 
-total_daily_contribs=$(echo "$total_daily_contribs" | jq -r '.[]')
-
-echo "$total_daily_contribs" > daily_contribs.json
+echo "$daily_contribs" > daily_contribs.json
 
 nano daily_contribs.json
