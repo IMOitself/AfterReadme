@@ -8,6 +8,9 @@ on:
     - cron: '*/10 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   call-reusable-workflow:
     uses: IMOitself/AfterReadme/.github/workflows/after-readme.yml@master
