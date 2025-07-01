@@ -7,7 +7,8 @@
 > [!CAUTION]
 > this project is dumped and is waiting for a new one. <br><br>
 > **REASON:** it is not working as intended. <br>
-> it does work before ([at this point](https://github.com/IMOitself/AfterReadme/tree/443c6586a5ec6f12af6e45fcd0197d37fb2d0fab)) but it is limited for users that has contribution beyond 1 year
+> it does work [before](https://github.com/IMOitself/AfterReadme/tree/443c6586a5ec6f12af6e45fcd0197d37fb2d0fab) but it is limited for users that does not have contribution beyond 1 year. <br><br>
+see [issue](https://github.com/IMOitself/AfterReadme/issues/1) for more info.
 
 <br>
 
