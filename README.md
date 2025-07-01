@@ -2,8 +2,8 @@
 
 **automatically update README using emojis**
 
-> [!NOTE]
-> work in progress
+> [!CAUTION]
+> work in progress. it is still buggy as heck
 
 ## Sample Usage
 
