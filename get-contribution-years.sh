@@ -26,6 +26,7 @@ get_contribution_years() {
   current_year=$(date +'%Y')
 
   years=$(seq $creation_year $current_year)
+  echo "$years"
 }
 
 echo $(get_contribution_years)
