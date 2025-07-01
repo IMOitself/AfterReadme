@@ -2,23 +2,21 @@
 
 **automatically update README using emojis**
 
+<br>
+
 > [!CAUTION]
 > this project is dumped and is waiting for a new one. <br><br>
 **REASON:** it is no longer working as intended.
 
-## Sample Usage
+<br>
+
+## Sample
 
 ❤️ total contributions: 0
 
 🔥 daily streak: 0 days<sup>`update now`</sup>
 
-<br><br>
-
-**Repositories:**
-
-IMOitself [auto-update-readme.yml](https://github.com/IMOitself/IMOitself/blob/main/.github/workflows/auto-update-readme.yml)
-
-IMOaswell [auto-update-readme.yml](https://github.com/IMOaswell/IMOaswell/blob/master/.github/workflows/auto-update-readme.yml) 
+<br>
 
 <br>
 
