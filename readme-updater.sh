@@ -8,14 +8,22 @@ echo "$daily_streak"
 
 readme=$(cat README.md)
 
-readme=$(echo "$readme" | sed -E 's/.*❤️([^:]+): .*/❤️\1: '$total_contribs'/g')
+updated_contribs=$(echo "$readme" | sed -E 's/.*❤️([^:]+): .*/❤️\1: '$total_contribs'/g')
 
-if [ "$daily_streak" -gt 0 ]; then 
-    readme=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/🔥\2: ${daily_streak} days/g")
+if [ -n "$updated_contribs" ]; then
+    readme="$updated_contribs"
+fi
+
+if [ "$daily_streak" -gt 0 ]; then
+    updated_streak=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/🔥\2: ${daily_streak} days/g")
 elif [ "$daily_streak" -eq 0 ]; then
-    readme=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/🔥\2: ${daily_streak} days<sup>\`update now\`<\/sup>/g")
+    updated_streak=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/🔥\2: ${daily_streak} days<sup>\`update now\`<\/sup>/g")
 else
-    readme=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/💀\2: ${daily_streak} days <sup>\`dead\`<\/sup>/g")
+    updated_streak=$(echo "$readme" | sed -E "s/([🔥💀])([^:]+): .*/💀\2: ${daily_streak} days <sup>\`dead\`<\/sup>/g")
+fi
+
+if [ -n "$updated_streak" ]; then
+    readme="$updated_streak"
 fi
 
 echo "$readme" > README.md
