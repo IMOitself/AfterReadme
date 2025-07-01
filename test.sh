@@ -49,7 +49,7 @@ query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
 
   json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$to_date'"}')
   daily_contribs=$(echo "$json" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
-  total_daily_contribs+=$daily_contribs
+  total_daily_contribs=$(($total_daily_contribs + $daily_contribs))
 done
 
 echo $total_daily_contribs
