@@ -26,39 +26,35 @@ echo "$json"
 
 
 
-get_contribution_dates() {
-  get_creation_date_graphql='
-  query($username: String!) {
-    user(login: $username) {
-      createdAt
-    }
-  }'
+years=$(bash "AfterReadme/get-contribution-years.sh")
 
-  json=$(get_json_from_graphql "$get_creation_date_graphql" '{"username": "'$GITHUB_USERNAME'"}')
-  creation_date=$(echo "$json" | jq -r '.data.user.createdAt')
-  current_date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo "$years"
 
-  echo "$creation_date" 
-  echo "$current_date"
-}
+total_daily_contribs=0
 
+for year in $years; do
+  from_date="${year}-01-01T00:00:00Z"
+  to_date="${year}-12-31T23:59:59Z"
 
-dates=$(get_contribution_dates)
-
-from_date=$(echo $dates | cut -d ' ' -f 1)
-curr_date=$(echo $dates | cut -d ' ' -f 2)
-
-get_contribs_graphql='
+  get_daily_contribs_graphql='
 query($username: String!, $from_date: DateTime!, $to_date: DateTime!) {
   user(login: $username) {
     contributionsCollection(from: $from_date, to: $to_date) {
-      contributionCalendar {
-        totalContributions
+      contributionCalendar{
+        weeks {
+          contributionDays{
+            contributionCount
+          }
+        }
       }
     }
   }
 }'
 
-json=$(get_json_from_graphql "$get_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$curr_date'"}')
+  json=$(get_json_from_graphql "$get_daily_contribs_graphql" '{"username": "'$GITHUB_USERNAME'", "from_date": "'$from_date'", "to_date": "'$to_date'"}')
+  daily_contribs=$(echo "$json" | jq -r '[.data.user.contributionsCollection.contributionCalendar.weeks[].contributionDays[]]')
+  total_daily_contribs=$(($total_daily_contribs + $daily_contribs))
+  echo "$daily_contribs"
+done
 
-echo "$json"
+echo $total_daily_contribs
