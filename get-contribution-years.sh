@@ -28,6 +28,4 @@ get_contribution_years() {
   years=$(seq $creation_year $current_year)
 }
 
-years=$(get_contribution_years)
-
-echo "$years"
+echo $(get_contribution_years)
