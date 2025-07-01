@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   call-after-readme-workflow:
-    uses: IMOitself/AfterReadme/.github/workflows/after-readme.yml@master
+    uses: IMOitself/AfterReadme/.github/workflows/after-readme.yml@443c6586a5ec6f12af6e45fcd0197d37fb2d0fab
     with:
       username: 'IMOitself'
     secrets:
