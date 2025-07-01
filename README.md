@@ -8,9 +8,9 @@
 ## Sample Usage
 
 ---
-❤️ total contributions: 939
+❤️ total contributions: 0
 
-🔥 daily streak: 18 days
+🔥 daily streak: 0 days<sup>`update now`</sup>
 
 ---
 
