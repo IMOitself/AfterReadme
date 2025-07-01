@@ -25,7 +25,7 @@ get_contribution_years() {
   creation_year=$(echo "$creation_date" | cut -d '-' -f 1)
   current_year=$(date +'%Y')
 
-  years=$(seq $creation_year $current_year)
+  years=$(seq $creation_year -1 $current_year)
   echo "$years"
 }
 
