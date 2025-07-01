@@ -9,7 +9,7 @@
 
 **Sample**
 
-❤️ total contributions: 925
+❤️ total contributions: 
 
 🔥 daily streak: 18 days
 
